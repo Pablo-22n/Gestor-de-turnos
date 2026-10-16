@@ -1,4 +1,3 @@
-# negocio/gestor_turnos.py
 """
 Capa de LÓGICA (NEGOCIO).
 Reglas del sistema: validaciones, decisiones, excepciones.

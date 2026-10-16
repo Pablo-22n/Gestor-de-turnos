@@ -1,12 +1,4 @@
 # datos/turno_dao.py
-"""
-DAO de la tabla 'turnos'.
-
-Como todos los turnos son de 30 minutos fijos, el solapamiento
-se reduce a: mismo profesional + misma fecha + misma hora.
-
-No valida nada: solo devuelve datos para que la capa de lógica decida.
-"""
 from mysql.connector import Error
 from datos.conexion import conectar
 

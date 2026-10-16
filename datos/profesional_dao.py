@@ -1,11 +1,3 @@
-# datos/profesional_dao.py
-"""
-DAO de la tabla 'profesionales'.
-
-Diferencia con pacientes: la baja es LÓGICA.
-En lugar de borrar el registro, se marca activo = 0.
-Así no se pierde el historial de turnos que tuvo.
-"""
 from mysql.connector import Error
 from datos.conexion import conectar
 

@@ -1,9 +1,3 @@
-# datos/paciente_dao.py
-"""
-DAO de pacientes. Solo SQL.
-No aplica reglas de negocio: no valida si un DNI existe,
-solo lo busca. La decisión la toma la capa de lógica.
-"""
 from mysql.connector import Error
 from datos.conexion import conectar
 
