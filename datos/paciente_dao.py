@@ -92,7 +92,7 @@ class PacienteDAO:
         conn = conectar()
         try:
             cur = conn.cursor()
-            cur.execute("DELETE FROM pacientes WHERE id = %s", (dni,))
+            cur.execute("DELETE FROM pacientes WHERE dni = %s", (dni,))
             conn.commit()
             return cur.rowcount > 0
         except Error as e:

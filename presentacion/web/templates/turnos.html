@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <h1>Turnos</h1>
+
+    <form method="GET" action="{{ url_for('turnos') }}">
+        <label>Ver turnos del día:
+            <input type="date" name="fecha" value="{{ fecha }}"
+                   onchange="this.form.submit()">
+        </label>
+    </form>
+
+    <form method="POST" action="{{ url_for('alta_turno') }}">
+        <h3>Alta de turno</h3>
+        <input type="text" name="dni_paciente" placeholder="DNI del paciente" required>
+        <input type="text" name="dni_profesional" placeholder="DNI del profesional" required>
+        <input type="date" name="fecha" required>
+        <input type="time" name="hora" required>
+        <button type="submit">Crear turno</button>
+    </form>
+
+    <h3>Turnos del {{ fecha }}</h3>
+    <table>
+        <tr>
+            <th>ID</th><th>Hora</th><th>Paciente</th>
+            <th>Profesional</th><th>Estado</th><th>Acciones</th>
+        </tr>
+        {% for t in turnos %}
+        <tr>
+            <td>{{ t.id }}</td>
+            <td>{{ t.hora }}</td>
+            <td>{{ t.paciente }}</td>
+            <td>{{ t.profesional }}</td>
+            <td>
+                <span class="estado estado-{{ t.estado }}">{{ t.estado }}</span>
+            </td>
+            <td>
+                {% if t.estado == 'pendiente' %}
+                <form method="POST"
+                      action="{{ url_for('confirmar_turno', id_turno=t.id) }}"
+                      style="display:inline; background:none; padding:0; box-shadow:none;">
+                    <button class="btn-small">Confirmar</button>
+                </form>
+                {% endif %}
+                {% if t.estado not in ('cancelado', 'atendido') %}
+                <form method="POST"
+                      action="{{ url_for('cancelar_turno', id_turno=t.id) }}"
+                      style="display:inline; background:none; padding:0; box-shadow:none;"
+                      onsubmit="return confirm('¿Cancelar este turno?')">
+                    <button class="btn-danger btn-small">Cancelar</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No hay turnos para esta fecha.</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

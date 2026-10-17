@@ -113,7 +113,7 @@ class ProfesionalDAO:
         try:
             cur = conn.cursor()
             cur.execute(
-                "DELETE FROM profesionales WHERE id = %s",
+                "DELETE FROM profesionales WHERE dni = %s",
                 (dni,)
             )
             conn.commit() #Guarda los cambios en la DB

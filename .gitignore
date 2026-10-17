@@ -15,13 +15,7 @@ env/
 # Archivos de prueba (temporales)
 test_*.py
 
-# Punto de entrada (por ahora no se sube)
-main.py
-
-# La parte web (todavía no está)
-presentacion/
-
-# Archivos del sistema
+# Archivos del sistema operativo
 .DS_Store
 Thumbs.db
 
