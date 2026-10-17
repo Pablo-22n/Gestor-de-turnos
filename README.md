@@ -4,7 +4,7 @@ Sistema de gestión de turnos médicos desarrollado en Python, con
 arquitectura en 3 capas (Presentación, Lógica y Datos) y base de datos
 MariaDB en un servidor Linux.
 
-> Mirá la **[Guía de Instalación paso a paso aquí](INSTALACION.md)**.
+> Mirá la **[Guía de Instalación paso a paso aquí](Guia_instalacion.md)**.
 
 ## Descripción
 
