@@ -93,6 +93,18 @@ El sistema está dividido en 3 capas:
 - La presentación **nunca** accede directo a los datos.
 
 
+---
+
+## 📸 Capturas de Pantalla
+
+### 1. Pantalla de Inicio de Sesión
+<img src="images/login.png" alt="Login" width="600">
+
+### 2. Gestión de Turnos
+<img src="images/turnos.png" alt="Gestión de Turnos" width="600">
+
+### 3. Pacientes
+<img src="images/pacientes.png" alt="Alta de Pacientes" width="600">
 
 
 
