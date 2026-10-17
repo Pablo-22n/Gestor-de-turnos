@@ -6,6 +6,8 @@ MariaDB en un servidor Linux.
 
 > Mirá la **[Guía de Instalación paso a paso aquí](Guia_instalacion.md)**.
 
+> Mirá la **[Guía de Instalación local](instalacion_local.md)**.
+
 ## Descripción
 
 Sistema para gestionar turnos médicos entre pacientes y profesionales.
