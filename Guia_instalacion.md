@@ -1,5 +1,14 @@
 # Guía de Despliegue - Sistema de Gestión de Turnos
 
+## ⚠️ Aviso importante antes de empezar
+Para que todo funcione correctamente, tené en cuenta estas 3 cosas:
+
+* **Red de la VM:** Asegurate de que tu máquina virtual tenga la configuración de red en modo "Adaptador Puente" (Bridge). Esto permite que tu PC con Windows se comunique con la VM como si estuvieran en la misma red.
+
+* **La IP:** A lo largo de esta guía vas a ver la IP `192.168.1.84`. Reemplazala por la IP real de tu máquina virtual. La podés averiguar ejecutando `hostname -I` en la terminal de la VM.
+
+* **El usuario:** Cuando veas `usuario_vm`, reemplazalo por tu nombre de usuario real de Linux (por ejemplo: `pablolab`, `juan`, `admin`, etc.)
+
 ## FASE 1: Configuración de la Máquina Virtual (Linux)
 
 ### 1. Prender la VM y verificar la IP
@@ -179,7 +188,7 @@ Como el servidor web y la base de datos están en la misma máquina, cambiar el 
 ```bash
 nano /var/www/turnos/config.py
 ```
-Cambiar `"host": "192.168.1.31"` por `"host": "localhost"`.
+Cambiar `"host": "192.168.1.84"` por `"host": "localhost"`.
 
 ### 6. Crear el archivo de conexión WSGI
 ```bash
@@ -202,7 +211,7 @@ sudo nano /etc/apache2/sites-available/turnos.conf
 Pegar esto:
 ```apache
 <VirtualHost *:80>
-    ServerName 192.168.1.31
+    ServerName 192.168.1.84
     WSGIScriptAlias /turnos /var/www/turnos/turnos.wsgi
     <Directory /var/www/turnos>
         Require all granted
