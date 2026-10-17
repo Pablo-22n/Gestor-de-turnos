@@ -22,6 +22,13 @@ interfaz (consola, web) sin tocar la lógica.
 
 ## Funcionalidades
 
+### Usuarios (Login)
+- Inicio de sesión con usuario y contraseña.
+- Contraseñas encriptadas en la base de datos (usando SHA-256).
+- Protección de rutas: sin login, no se puede acceder a la gestión de turnos.
+- Cierre de sesión.
+- **Usuario por defecto:** `admin` / `admin123`
+
 ### Pacientes
 * Alta de paciente (DNI, nombre, apellido, teléfono).
 * Listado de todos los pacientes.
