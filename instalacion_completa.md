@@ -35,7 +35,7 @@ Al finalizar, vas a tener el sistema de turnos corriendo en tu navegador y vas a
 Vamos a descargarlo como ZIP:
 1. Andá a la página de GitHub del proyecto: [https://github.com/Pablo-22n/Gestor-de-turnos](https://github.com/Pablo-22n/Gestor-de-turnos)
 2. Hacé clic en el botón verde que dice **"<> Code"** y elegí **"Download ZIP"**.
-3. Se va a descargar un archivo `.zip` (por ejemplo, `Gestor-de-turnos-main.zip`).
+3. Se va a descargar un archivo `.zip`
 4. Hacé clic derecho sobre el ZIP y elegí **"Extraer todo..."**. 
 5. Guardá la carpeta extraída en un lugar fácil de encontrar, como el **Escritorio**.
 
