@@ -8,10 +8,10 @@ import os
 
 
 DB_CONFIG = {
-    "host": os.getenv("DB_HOST", "192.168.xx.xx"), # <-- Poné localhost o ip de tu VM
+    "host": os.getenv("DB_HOST", "localhost"), # <-- Poné localhost o ip de tu VM
     "port": int(os.getenv("DB_PORT", 3306)),
-    "user": os.getenv("DB_USER", "turnos_admin"),
-    "password": os.getenv("DB_PASSWORD", "TU_CONTRASEÑA_AQUI"),  # ← CAMBIAR
+    "user": os.getenv("DB_USER", "root"),  # ← CAMBIAR
+    "password": os.getenv("DB_PASSWORD", ""),  # ← CAMBIAR
     "database": os.getenv("DB_NAME", "turnos"),
     "charset": "utf8mb4",
 }

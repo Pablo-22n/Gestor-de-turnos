@@ -1,34 +1,83 @@
 {% extends "base.html" %}
-{% block contenido %}
-    <h1>Pacientes</h1>
 
-    <form method="POST" action="{{ url_for('alta_paciente') }}">
-        <h3>Alta de paciente</h3>
-        <input type="text" name="dni" placeholder="DNI" required>
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="text" name="apellido" placeholder="Apellido" required>
-        <input type="text" name="telefono" placeholder="Teléfono (opcional)">
-        <button type="submit">Dar de alta</button>
-    </form>
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Gestión de Pacientes</h1>
+    <p class="text-gray-600">Administrá el listado de pacientes de la clínica.</p>
+</div>
 
-    <table>
-        <tr><th>DNI</th><th>Nombre</th><th>Teléfono</th><th></th></tr>
-        {% for p in pacientes %}
-        <tr>
-            <td>{{ p.dni }}</td>
-            <td>{{ p.apellido }}, {{ p.nombre }}</td>
-            <td>{{ p.telefono or '—' }}</td>
-            <td>
-                <form method="POST"
-                      action="{{ url_for('baja_paciente', dni=p.dni) }}"
-                      style="display:inline; background:none; padding:0; box-shadow:none;"
-                      onsubmit="return confirm('¿Eliminar este paciente?')">
-                    <button class="btn-danger btn-small">Eliminar</button>
-                </form>
-            </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="4">No hay pacientes registrados.</td></tr>
-        {% endfor %}
-    </table>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Formulario para NUEVO PACIENTE -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-fit">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">Nuevo Paciente</h2>
+        <form action="{{ url_for('alta_paciente') }}" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-600">DNI</label>
+                <input type="text" name="dni" required placeholder="Sin puntos" 
+                       class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="flex gap-3">
+                <div class="w-1/2">
+                    <label class="block text-sm font-semibold text-gray-600">Nombre</label>
+                    <input type="text" name="nombre" required 
+                           class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="w-1/2">
+                    <label class="block text-sm font-semibold text-gray-600">Apellido</label>
+                    <input type="text" name="apellido" required 
+                           class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-600">Teléfono (Opcional)</label>
+                <input type="text" name="telefono" placeholder="Ej: 11 1234-5678" 
+                       class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition mt-2">
+                Registrar Paciente
+            </button>
+        </form>
+    </div>
+
+    <!-- Lista de Pacientes -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">DNI</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Paciente</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Teléfono</th>
+                        <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for paciente in pacientes %}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">{{ paciente.dni }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {{ paciente.nombre }} {{ paciente.apellido }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ paciente.telefono|default('-', true) }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <form action="{{ url_for('baja_paciente', dni=paciente.dni) }}" method="POST" class="inline" onsubmit="return confirm('¿Seguro que querés eliminar a este paciente? Se perderán sus datos.');">
+                                <button type="submit" class="text-red-600 hover:text-red-900 font-semibold bg-red-50 px-3 py-1 rounded">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+                            No hay pacientes registrados en el sistema.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
