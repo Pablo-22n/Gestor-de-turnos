@@ -3,43 +3,46 @@
 {% block content %}
 <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
     <h1 class="text-3xl font-bold text-gray-800">Gestión de Turnos</h1>
-    
+
     <!-- Filtro por fecha -->
     <form action="{{ url_for('turnos') }}" method="GET" class="flex gap-2">
-        <input type="date" name="fecha" value="{{ fecha }}" class="border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
-        <button type="submit" class="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition font-medium">Filtrar</button>
+        <input type="date" name="fecha" value="{{ fecha }}"
+            class="border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+        <button type="submit"
+            class="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition font-medium">Filtrar</button>
     </form>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    
+
     <!-- Formulario para NUEVO TURNO -->
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-fit">
         <h2 class="text-xl font-bold mb-4 text-gray-700">Agendar Nuevo Turno</h2>
         <form action="{{ url_for('alta_turno') }}" method="POST" class="space-y-4">
             <div>
                 <label class="block text-sm font-semibold text-gray-600">DNI del Paciente</label>
-                <input type="text" name="dni_paciente" required placeholder="Ej: 30123456" 
-                       class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+                <input type="text" name="dni_paciente" required placeholder="Ej: 30123456"
+                    class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
             </div>
             <div>
                 <label class="block text-sm font-semibold text-gray-600">DNI del Profesional</label>
-                <input type="text" name="dni_profesional" required placeholder="Ej: 20123456" 
-                       class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+                <input type="text" name="dni_profesional" required placeholder="Ej: 20123456"
+                    class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
             </div>
             <div class="flex gap-3">
                 <div class="w-1/2">
                     <label class="block text-sm font-semibold text-gray-600">Fecha</label>
-                    <input type="date" name="fecha" required 
-                           class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+                    <input type="date" name="fecha" required
+                        class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="w-1/2">
                     <label class="block text-sm font-semibold text-gray-600">Hora</label>
-                    <input type="time" name="hora" required 
-                           class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
+                    <input type="time" name="hora" required
+                        class="w-full border border-gray-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
-            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition mt-2">
+            <button type="submit"
+                class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition mt-2">
                 Confirmar Agenda
             </button>
         </form>
@@ -51,52 +54,70 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Hora</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Detalles</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
-                        <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Hora
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                            Detalles</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado
+                        </th>
+                        <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
+                            Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     {% for turno in turnos %}
                     <tr class="hover:bg-gray-50 transition">
                         <!-- Asume que turno.hora viene formateado o es objeto time -->
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">{{ turno.hora }}</td>
-                        
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">{{ turno.hora | string | truncate(5, True, '') }}</td>
+
                         <!-- Si el backend hizo JOIN, capaz tengas turno.nombre_paciente. Si no, mostramos IDs -->
                         <td class="px-6 py-4 text-sm">
-                            <div class="font-medium text-gray-900">Paciente ID: {{ turno.paciente_id }}</div>
-                            <div class="text-gray-500">Prof ID: {{ turno.profesional_id }}</div>
+                            <div class="font-medium text-gray-900">{{ turno.paciente }}</div>
+                            <div class="text-gray-500">con {{ turno.profesional }}</div>
                         </td>
-                        
+
                         <td class="px-6 py-4 whitespace-nowrap">
                             <!-- Badges dinámicos según el ENUM de la base de datos -->
                             {% if turno.estado == 'pendiente' %}
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendiente</span>
+                            <span
+                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendiente</span>
                             {% elif turno.estado == 'confirmado' %}
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Confirmado</span>
+                            <span
+                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Confirmado</span>
                             {% elif turno.estado == 'atendido' %}
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Atendido</span>
+                            <span
+                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Atendido</span>
                             {% elif turno.estado == 'ausente' %}
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">Ausente</span>
+                            <span
+                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">Ausente</span>
                             {% elif turno.estado == 'cancelado' %}
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelado</span>
+                            <span
+                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelado</span>
                             {% else %}
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">{{ turno.estado }}</span>
+                            <span
+                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">{{
+                                turno.estado }}</span>
                             {% endif %}
                         </td>
-                        
+
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-3">
                             <!-- Si el turno no está cancelado ni atendido, permitimos acciones -->
                             {% if turno.estado in ['pendiente'] %}
-                            <form action="{{ url_for('confirmar_turno', id_turno=turno.id) }}" method="POST" class="inline">
-                                <button type="submit" class="text-blue-600 hover:text-blue-900 font-semibold bg-blue-50 px-2 py-1 rounded">✔ Confirmar</button>
+                            <form action="{{ url_for('confirmar_turno', id_turno=turno.id) }}" method="POST"
+                                class="inline">
+                                <button type="submit"
+                                    class="text-blue-600 hover:text-blue-900 font-semibold bg-blue-50 px-2 py-1 rounded">✔
+                                    Confirmar</button>
                             </form>
                             {% endif %}
-                            
+
                             {% if turno.estado not in ['cancelado', 'atendido'] %}
-                            <form action="{{ url_for('cancelar_turno', id_turno=turno.id) }}" method="POST" class="inline" onsubmit="return confirm('¿Estás seguro de cancelar definitivamente este turno?');">
-                                <button type="submit" class="text-red-600 hover:text-red-900 font-semibold bg-red-50 px-2 py-1 rounded">✖ Cancelar</button>
+                            <form action="{{ url_for('cancelar_turno', id_turno=turno.id) }}" method="POST"
+                                class="inline"
+                                onsubmit="return confirm('¿Estás seguro de cancelar definitivamente este turno?');">
+                                <button type="submit"
+                                    class="text-red-600 hover:text-red-900 font-semibold bg-red-50 px-2 py-1 rounded">✖
+                                    Cancelar</button>
                             </form>
                             {% endif %}
                         </td>
