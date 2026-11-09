@@ -40,8 +40,7 @@ CREATE TABLE IF NOT EXISTS turnos (
     profesional_id  INT      NOT NULL,
     fecha           DATE     NOT NULL,
     hora            TIME     NOT NULL,
-    estado          ENUM('pendiente','confirmado','atendido','cancelado','ausente')
-                    NOT NULL DEFAULT 'pendiente',
+    estado ENUM('pendiente','confirmado','cancelado') NOT NULL DEFAULT 'pendiente',
 
     FOREIGN KEY (paciente_id)    REFERENCES pacientes(id),
     FOREIGN KEY (profesional_id) REFERENCES profesionales(id),
