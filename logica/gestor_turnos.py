@@ -63,15 +63,16 @@ class GestorTurnos:
 
 #----------------------------------------------------------------------------
     def baja_paciente(self, dni):
-        
-        #Invoca la función de paciente para verificar por ID. 
-        # Si el paciente no existe, frena el flujo.
+        # 1. Verifica que el paciente exista
         if not self.paciente_dao.buscar_por_dni(dni):
-            raise TurnoNoEncontradoError(f"Paciente con id {dni} no existe")
+            raise TurnoNoEncontradoError(f"Paciente con DNI {dni} no existe")
         
-        # 2. Si el paciente existe, lo elimina
-        else:
+        # 2. Intenta eliminarlo (capturando el error de la base de datos)
+        try:
             self.paciente_dao.eliminar(dni)
+        except Exception:
+            raise DatosInvalidosError(
+                "No se puede eliminar el paciente: tiene turnos asociados")
 
     def listar_pacientes(self):
         return self.paciente_dao.listar()
@@ -114,13 +115,12 @@ class GestorTurnos:
 #----------------------------------------------------------------------------
 #Elimina un profesional
     def baja_profesional(self, dni):
-
-    #valida que el profesional exista
+        # 1. Verifica que el profesional exista
         if not self.profesional_dao.buscar_por_dni(dni):
-            raise TurnoNoEncontradoError(f"Profesional con dni {dni} no existe")
+            raise TurnoNoEncontradoError(f"Profesional con DNI {dni} no existe")
         
+        # 2. Intenta eliminarlo (capturando el error de la base de datos)
         try:
-    #Invoca al metodo de la clase profesional para eliminar al profesional por dni
             self.profesional_dao.eliminar(dni)
         except Exception:
             raise DatosInvalidosError(
@@ -238,8 +238,8 @@ class GestorTurnos:
         self.turno_dao.reprogramar(id_turno, nueva_fecha, nueva_hora)
 
 #----------------------------------------------------------------------------
-    def turnos_por_fecha(self, fecha):
-        return self.turno_dao.listar_por_fecha(fecha)
+    def turnos_por_fecha(self, fecha=None, estado=None):
+        return self.turno_dao.listar_por_fecha(fecha, estado)
 
 # Devuelve la lista de turnos asociados a un paciente específico
     def turnos_de_paciente(self, dni_paciente):

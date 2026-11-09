@@ -50,12 +50,13 @@ class TurnoDAO:
      conn = conectar() #Establece la conexion con la DB
      try:
          cur = conn.cursor(dictionary=True)
+#Devuelve los turnos de un profesional segun fecha y hora para verificar si esta ocupado
          cur.execute("""
              SELECT id FROM turnos
              WHERE profesional_id = %s
                AND fecha = %s
                AND hora = %s
-               AND estado NOT IN ('cancelado', 'ausente')
+               AND estado <> 'cancelado'
          """, (profesional_id, fecha, hora))
          return cur.fetchall()
      finally:
@@ -109,28 +110,43 @@ class TurnoDAO:
             conn.close()
 
 #----------------------------------------------------------------------------
-#Devuelve la lista de turnos para la fecha pasada como parametro
-    def listar_por_fecha(self, fecha):
+    # Devuelve la lista de turnos. Si no se pasa fecha, trae todos los turnos.
+       
+    def listar_por_fecha(self, fecha=None, estado=None):
 
         conn = conectar()
         try:
             cur = conn.cursor(dictionary=True)
-            cur.execute("""
+            
+            sql = """
                 SELECT t.id, t.fecha, t.hora, t.estado,
                        CONCAT(p.apellido, ', ', p.nombre) AS paciente,
                        CONCAT(pr.apellido, ', ', pr.nombre) AS profesional
                 FROM turnos t
                 JOIN pacientes p ON p.id = t.paciente_id
                 JOIN profesionales pr ON pr.id = t.profesional_id
-                WHERE t.fecha = %s AND t.estado <> 'cancelado'
-                ORDER BY t.hora
-            """, (fecha,))
-        # Devuelve la lista completa con todos los turnos del día.
+                WHERE 1=1
+            """
+            
+            # Armamos los filtros dinámicamente
+            params = []
+            if fecha is not None:
+                sql += " AND t.fecha = %s"
+                params.append(fecha)
+                
+            if estado is not None and estado != "":
+                sql += " AND t.estado = %s"
+                params.append(estado)
+                
+            sql += " ORDER BY t.fecha, t.hora"
+            
+            cur.execute(sql, tuple(params))
+            
+            # Devuelve la lista completa con todos los turnos.
             return cur.fetchall() 
         finally:
             cur.close()
             conn.close()
-
 #----------------------------------------------------------------------------
 #Devuelve todos los turnos pertenecientes a un paciente especifico
     def listar_por_paciente(self, paciente_id):

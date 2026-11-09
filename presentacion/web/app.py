@@ -146,15 +146,26 @@ def create_app():
     @app.route("/turnos")
     @requiere_login
     def turnos():
-        fecha_str = request.args.get("fecha", date.today().isoformat())
-        try:
-            fecha = date.fromisoformat(fecha_str)
-        except ValueError:
-            fecha = date.today()
+        fecha_str = request.args.get("fecha", "")
+        estado_str = request.args.get("estado", "")  # <-- NUEVO: Leemos el estado
+        
+        # Procesamos la fecha
+        if fecha_str and fecha_str != "None" and fecha_str.strip() != "":
+            try:
+                fecha = date.fromisoformat(fecha_str)
+            except ValueError:
+                fecha = None
+        else:
+            fecha = None
 
-        lista = gestor.turnos_por_fecha(fecha)
-        return render_template("turnos.html", turnos=lista, fecha=fecha)
+        # Le pasamos la fecha y el estado al gestor
+        lista = gestor.turnos_por_fecha(fecha, estado_str)
+        
+        # Le pasamos el estado a la plantilla para que sepa cuál opción dejar seleccionada
+        return render_template("turnos.html", turnos=lista, fecha=fecha, estado_actual=estado_str)
 
+    
+    
     @app.route("/turnos/nuevo", methods=["POST"])
     @requiere_login
     def alta_turno():
