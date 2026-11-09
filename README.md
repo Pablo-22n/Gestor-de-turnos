@@ -95,16 +95,16 @@ El sistema está dividido en 3 capas:
 ## 📸 Capturas de Pantalla
 
 ### 1. Pantalla de Inicio de Sesión
-<img src="images/login.png" alt="Login" width="600">
+<img src="images/login.png" alt="Login" width="100%">
 
 ### 2. Pantalla principal
-<img src="images/principal.png" alt="menu" width="600">
+<img src="images/principal.png" alt="menu" width="100%">
 
 ### 3. Gestión de Turnos
-<img src="images/turnos.png" alt="Gestión de Turnos" width="600">
+<img src="images/turnos.png" alt="Gestión de Turnos" width="100%">
 
 ### 4. Pacientes
-<img src="images/pacientes.png" alt="Alta de Pacientes" width="600">
+<img src="images/pacientes.png" alt="Alta de Pacientes" width="100%">
 
 
 
