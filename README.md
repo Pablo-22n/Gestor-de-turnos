@@ -26,7 +26,6 @@ interfaz (consola, web) sin tocar la lógica.
 
 ### Usuarios (Login)
 - Inicio de sesión con usuario y contraseña.
-- Contraseñas encriptadas en la base de datos (usando SHA-256).
 - Protección de rutas: sin login, no se puede acceder a la gestión de turnos.
 - Cierre de sesión.
 - **Usuario por defecto:** `admin` / `admin123`
@@ -67,13 +66,9 @@ Todas las reglas se validan en la capa de lógica antes de tocar la base de dato
 
 ### Turnos
 * La fecha y hora deben ser futuras.
-* El paciente debe existir.
-* El profesional debe existir.
+* El paciente y el profesional deben existir.
 * No puede haber dos turnos solapados para el mismo profesional en la misma fecha y hora (todos los turnos duran 30 minutos).
 * Solo se pueden confirmar turnos pendientes.
-* No se pueden cancelar turnos ya cancelados o atendidos.
-* No se pueden reprogramar turnos cancelados o atendidos.
-* Un turno cancelado o ausente libera el horario, permitiendo dar ese turno a otro paciente.
 
 
 ---
@@ -102,10 +97,13 @@ El sistema está dividido en 3 capas:
 ### 1. Pantalla de Inicio de Sesión
 <img src="images/login.png" alt="Login" width="600">
 
-### 2. Gestión de Turnos
+### 2. Pantalla principal
+<img src="images/principal.png" alt="menu" width="600">
+
+### 3. Gestión de Turnos
 <img src="images/turnos.png" alt="Gestión de Turnos" width="600">
 
-### 3. Pacientes
+### 4. Pacientes
 <img src="images/pacientes.png" alt="Alta de Pacientes" width="600">
 
 
